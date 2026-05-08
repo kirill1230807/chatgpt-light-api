@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,23 +31,29 @@ import androidx.compose.ui.unit.dp
 import com.example.chatgptlightapi.R
 
 @Composable
-fun MainChatScreen() {
+fun MainChatScreen(viewModel: MainChatViewModel) {
+    val message by viewModel.messageText.collectAsState()
 
+    MainChatScreenContent(
+        message = message,
+        onTextChange = { string -> viewModel.onMessageTextChange(string) },
+        onSendClick = { viewModel.sendMessage() }
+    )
 }
+
 @Composable
 fun MainChatScreenContent(
+    message: String,
+    onTextChange: (String) -> Unit,
+    onSendClick: () -> Unit
 ) {
-    var message by remember { mutableStateOf("") }
 
     Scaffold(
         bottomBar = {
             MessageInputField(
                 text = message,
-                onTextChange = { message = it },
-                onSendClick = {
-                    println("Кнопка натиснута")
-                    message = ""
-                }
+                onTextChange = onTextChange ,
+                onSendClick = onSendClick
             )
         },
         modifier = Modifier
@@ -107,6 +114,10 @@ private fun MessageInputField(
 
 @Preview
 @Composable
-private fun MainChatScreenContentRoute() {
-    MainChatScreenContent()
+private fun MainChatScreenContentPreview() {
+    MainChatScreenContent(
+        message = "тут буде таке собі повідомлення",
+        onTextChange = {},
+        onSendClick = {}
+    )
 }
