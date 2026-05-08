@@ -6,7 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.chatgptlightapi.presentation.screens.MainChatScreen
+import com.example.chatgptlightapi.presentation.screens.chat.MainChatScreen
+import com.example.chatgptlightapi.presentation.screens.chat.MainChatScreenContent
 
 @Composable
 fun AppNavigation() {
